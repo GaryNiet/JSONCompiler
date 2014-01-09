@@ -1,0 +1,10 @@
+BEGIN(100,100);
+GROUND(0,0,0);
+var = 90;
+while(var)
+{
+MOUNTAIN(var,var,20,-2);
+var = var-10
+}
+
+END

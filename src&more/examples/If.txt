@@ -1,0 +1,14 @@
+BEGIN(100,100);
+GROUND(0,0,0);
+var = 0;
+
+if(var)
+{MOUNTAIN(50,50,40,-1)}
+else
+{
+MOUNTAIN(80,80,20,-1);
+MOUNTAIN(20,20,20,-1)
+}
+
+
+END

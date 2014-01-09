@@ -1,0 +1,10 @@
+BEGIN(100,100);
+
+GROUND(0,0,0);
+var = 10;
+MOUNTAIN(var,var,var,-2);
+
+var2 = var+30;
+MOUNTAIN(var2,var2,var2,-3)
+
+END

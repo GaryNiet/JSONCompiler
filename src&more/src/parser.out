@@ -1,0 +1,970 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> map
+Rule 1     map -> BEGIN ( expression , expression ) ; programme END
+Rule 2     name -> NAME
+Rule 3     programme -> statement
+Rule 4     programme -> statement ; programme
+Rule 5     statement -> assignation
+Rule 6     statement -> structure
+Rule 7     statement -> geoelement
+Rule 8     geoelement -> GROUND ( expression , expression , expression )
+Rule 9     geoelement -> MOUNTAIN ( expression , expression , expression , expression )
+Rule 10    geoelement -> WATER ( expression )
+Rule 11    geoelement -> RIVER ( expression , expression , expression , expression )
+Rule 12    structure -> IF ( expression ) { programme } ELSE { programme }
+Rule 13    structure -> IF ( expression ) { programme }
+Rule 14    structure -> WHILE ( expression ) { programme }
+Rule 15    expression -> expression ADD_OP expression
+Rule 16    expression -> expression MUL_OP expression
+Rule 17    expression -> NUMBER
+Rule 18    expression -> IDENTIFIER
+Rule 19    expression -> ( expression )
+Rule 20    expression -> ADD_OP expression
+Rule 21    assignation -> IDENTIFIER = expression
+
+Terminals, with rules where they appear
+
+(                    : 1 8 9 10 11 12 13 14 19
+)                    : 1 8 9 10 11 12 13 14 19
+,                    : 1 8 8 9 9 9 11 11 11
+;                    : 1 4
+=                    : 21
+ADD_OP               : 15 20
+BEGIN                : 1
+ELSE                 : 12
+END                  : 1
+GROUND               : 8
+IDENTIFIER           : 18 21
+IF                   : 12 13
+MOUNTAIN             : 9
+MUL_OP               : 16
+NAME                 : 2
+NUMBER               : 17
+RIVER                : 11
+WATER                : 10
+WHILE                : 14
+error                : 
+{                    : 12 12 13 14
+}                    : 12 12 13 14
+
+Nonterminals, with rules where they appear
+
+assignation          : 5
+expression           : 1 1 8 8 8 9 9 9 9 10 11 11 11 11 12 13 14 15 15 16 16 19 20 21
+geoelement           : 7
+map                  : 0
+name                 : 
+programme            : 1 4 12 12 13 14
+statement            : 3 4
+structure            : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . map
+    (1) map -> . BEGIN ( expression , expression ) ; programme END
+
+    BEGIN           shift and go to state 2
+
+    map                            shift and go to state 1
+
+state 1
+
+    (0) S' -> map .
+
+
+
+state 2
+
+    (1) map -> BEGIN . ( expression , expression ) ; programme END
+
+    (               shift and go to state 3
+
+
+state 3
+
+    (1) map -> BEGIN ( . expression , expression ) ; programme END
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 7
+
+state 4
+
+    (18) expression -> IDENTIFIER .
+
+    ADD_OP          reduce using rule 18 (expression -> IDENTIFIER .)
+    MUL_OP          reduce using rule 18 (expression -> IDENTIFIER .)
+    ;               reduce using rule 18 (expression -> IDENTIFIER .)
+    END             reduce using rule 18 (expression -> IDENTIFIER .)
+    }               reduce using rule 18 (expression -> IDENTIFIER .)
+    ,               reduce using rule 18 (expression -> IDENTIFIER .)
+    )               reduce using rule 18 (expression -> IDENTIFIER .)
+
+
+state 5
+
+    (17) expression -> NUMBER .
+
+    ADD_OP          reduce using rule 17 (expression -> NUMBER .)
+    MUL_OP          reduce using rule 17 (expression -> NUMBER .)
+    ;               reduce using rule 17 (expression -> NUMBER .)
+    END             reduce using rule 17 (expression -> NUMBER .)
+    }               reduce using rule 17 (expression -> NUMBER .)
+    ,               reduce using rule 17 (expression -> NUMBER .)
+    )               reduce using rule 17 (expression -> NUMBER .)
+
+
+state 6
+
+    (19) expression -> ( . expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 9
+
+state 7
+
+    (1) map -> BEGIN ( expression . , expression ) ; programme END
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 12
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 8
+
+    (20) expression -> ADD_OP . expression
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 13
+
+state 9
+
+    (19) expression -> ( expression . )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 14
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 10
+
+    (15) expression -> expression ADD_OP . expression
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 15
+
+state 11
+
+    (16) expression -> expression MUL_OP . expression
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 16
+
+state 12
+
+    (1) map -> BEGIN ( expression , . expression ) ; programme END
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 17
+
+state 13
+
+    (20) expression -> ADD_OP expression .
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ADD_OP          reduce using rule 20 (expression -> ADD_OP expression .)
+    MUL_OP          reduce using rule 20 (expression -> ADD_OP expression .)
+    ;               reduce using rule 20 (expression -> ADD_OP expression .)
+    END             reduce using rule 20 (expression -> ADD_OP expression .)
+    }               reduce using rule 20 (expression -> ADD_OP expression .)
+    ,               reduce using rule 20 (expression -> ADD_OP expression .)
+    )               reduce using rule 20 (expression -> ADD_OP expression .)
+
+  ! ADD_OP          [ shift and go to state 10 ]
+  ! MUL_OP          [ shift and go to state 11 ]
+
+
+state 14
+
+    (19) expression -> ( expression ) .
+
+    ADD_OP          reduce using rule 19 (expression -> ( expression ) .)
+    MUL_OP          reduce using rule 19 (expression -> ( expression ) .)
+    ;               reduce using rule 19 (expression -> ( expression ) .)
+    END             reduce using rule 19 (expression -> ( expression ) .)
+    }               reduce using rule 19 (expression -> ( expression ) .)
+    ,               reduce using rule 19 (expression -> ( expression ) .)
+    )               reduce using rule 19 (expression -> ( expression ) .)
+
+
+state 15
+
+    (15) expression -> expression ADD_OP expression .
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ADD_OP          reduce using rule 15 (expression -> expression ADD_OP expression .)
+    ;               reduce using rule 15 (expression -> expression ADD_OP expression .)
+    END             reduce using rule 15 (expression -> expression ADD_OP expression .)
+    }               reduce using rule 15 (expression -> expression ADD_OP expression .)
+    ,               reduce using rule 15 (expression -> expression ADD_OP expression .)
+    )               reduce using rule 15 (expression -> expression ADD_OP expression .)
+    MUL_OP          shift and go to state 11
+
+  ! MUL_OP          [ reduce using rule 15 (expression -> expression ADD_OP expression .) ]
+  ! ADD_OP          [ shift and go to state 10 ]
+
+
+state 16
+
+    (16) expression -> expression MUL_OP expression .
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ADD_OP          reduce using rule 16 (expression -> expression MUL_OP expression .)
+    MUL_OP          reduce using rule 16 (expression -> expression MUL_OP expression .)
+    ;               reduce using rule 16 (expression -> expression MUL_OP expression .)
+    END             reduce using rule 16 (expression -> expression MUL_OP expression .)
+    }               reduce using rule 16 (expression -> expression MUL_OP expression .)
+    ,               reduce using rule 16 (expression -> expression MUL_OP expression .)
+    )               reduce using rule 16 (expression -> expression MUL_OP expression .)
+
+  ! ADD_OP          [ shift and go to state 10 ]
+  ! MUL_OP          [ shift and go to state 11 ]
+
+
+state 17
+
+    (1) map -> BEGIN ( expression , expression . ) ; programme END
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 18
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 18
+
+    (1) map -> BEGIN ( expression , expression ) . ; programme END
+
+    ;               shift and go to state 19
+
+
+state 19
+
+    (1) map -> BEGIN ( expression , expression ) ; . programme END
+    (3) programme -> . statement
+    (4) programme -> . statement ; programme
+    (5) statement -> . assignation
+    (6) statement -> . structure
+    (7) statement -> . geoelement
+    (21) assignation -> . IDENTIFIER = expression
+    (12) structure -> . IF ( expression ) { programme } ELSE { programme }
+    (13) structure -> . IF ( expression ) { programme }
+    (14) structure -> . WHILE ( expression ) { programme }
+    (8) geoelement -> . GROUND ( expression , expression , expression )
+    (9) geoelement -> . MOUNTAIN ( expression , expression , expression , expression )
+    (10) geoelement -> . WATER ( expression )
+    (11) geoelement -> . RIVER ( expression , expression , expression , expression )
+
+    IDENTIFIER      shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 26
+    GROUND          shift and go to state 23
+    MOUNTAIN        shift and go to state 27
+    WATER           shift and go to state 29
+    RIVER           shift and go to state 24
+
+    assignation                    shift and go to state 20
+    structure                      shift and go to state 30
+    geoelement                     shift and go to state 31
+    programme                      shift and go to state 25
+    statement                      shift and go to state 28
+
+state 20
+
+    (5) statement -> assignation .
+
+    ;               reduce using rule 5 (statement -> assignation .)
+    }               reduce using rule 5 (statement -> assignation .)
+    END             reduce using rule 5 (statement -> assignation .)
+
+
+state 21
+
+    (21) assignation -> IDENTIFIER . = expression
+
+    =               shift and go to state 32
+
+
+state 22
+
+    (12) structure -> IF . ( expression ) { programme } ELSE { programme }
+    (13) structure -> IF . ( expression ) { programme }
+
+    (               shift and go to state 33
+
+
+state 23
+
+    (8) geoelement -> GROUND . ( expression , expression , expression )
+
+    (               shift and go to state 34
+
+
+state 24
+
+    (11) geoelement -> RIVER . ( expression , expression , expression , expression )
+
+    (               shift and go to state 35
+
+
+state 25
+
+    (1) map -> BEGIN ( expression , expression ) ; programme . END
+
+    END             shift and go to state 36
+
+
+state 26
+
+    (14) structure -> WHILE . ( expression ) { programme }
+
+    (               shift and go to state 37
+
+
+state 27
+
+    (9) geoelement -> MOUNTAIN . ( expression , expression , expression , expression )
+
+    (               shift and go to state 38
+
+
+state 28
+
+    (3) programme -> statement .
+    (4) programme -> statement . ; programme
+
+    }               reduce using rule 3 (programme -> statement .)
+    END             reduce using rule 3 (programme -> statement .)
+    ;               shift and go to state 39
+
+
+state 29
+
+    (10) geoelement -> WATER . ( expression )
+
+    (               shift and go to state 40
+
+
+state 30
+
+    (6) statement -> structure .
+
+    ;               reduce using rule 6 (statement -> structure .)
+    }               reduce using rule 6 (statement -> structure .)
+    END             reduce using rule 6 (statement -> structure .)
+
+
+state 31
+
+    (7) statement -> geoelement .
+
+    ;               reduce using rule 7 (statement -> geoelement .)
+    }               reduce using rule 7 (statement -> geoelement .)
+    END             reduce using rule 7 (statement -> geoelement .)
+
+
+state 32
+
+    (21) assignation -> IDENTIFIER = . expression
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 41
+
+state 33
+
+    (12) structure -> IF ( . expression ) { programme } ELSE { programme }
+    (13) structure -> IF ( . expression ) { programme }
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 42
+
+state 34
+
+    (8) geoelement -> GROUND ( . expression , expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 43
+
+state 35
+
+    (11) geoelement -> RIVER ( . expression , expression , expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 44
+
+state 36
+
+    (1) map -> BEGIN ( expression , expression ) ; programme END .
+
+    $end            reduce using rule 1 (map -> BEGIN ( expression , expression ) ; programme END .)
+
+
+state 37
+
+    (14) structure -> WHILE ( . expression ) { programme }
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 45
+
+state 38
+
+    (9) geoelement -> MOUNTAIN ( . expression , expression , expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 46
+
+state 39
+
+    (4) programme -> statement ; . programme
+    (3) programme -> . statement
+    (4) programme -> . statement ; programme
+    (5) statement -> . assignation
+    (6) statement -> . structure
+    (7) statement -> . geoelement
+    (21) assignation -> . IDENTIFIER = expression
+    (12) structure -> . IF ( expression ) { programme } ELSE { programme }
+    (13) structure -> . IF ( expression ) { programme }
+    (14) structure -> . WHILE ( expression ) { programme }
+    (8) geoelement -> . GROUND ( expression , expression , expression )
+    (9) geoelement -> . MOUNTAIN ( expression , expression , expression , expression )
+    (10) geoelement -> . WATER ( expression )
+    (11) geoelement -> . RIVER ( expression , expression , expression , expression )
+
+    IDENTIFIER      shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 26
+    GROUND          shift and go to state 23
+    MOUNTAIN        shift and go to state 27
+    WATER           shift and go to state 29
+    RIVER           shift and go to state 24
+
+    assignation                    shift and go to state 20
+    structure                      shift and go to state 30
+    geoelement                     shift and go to state 31
+    programme                      shift and go to state 47
+    statement                      shift and go to state 28
+
+state 40
+
+    (10) geoelement -> WATER ( . expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 48
+
+state 41
+
+    (21) assignation -> IDENTIFIER = expression .
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ;               reduce using rule 21 (assignation -> IDENTIFIER = expression .)
+    }               reduce using rule 21 (assignation -> IDENTIFIER = expression .)
+    END             reduce using rule 21 (assignation -> IDENTIFIER = expression .)
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 42
+
+    (12) structure -> IF ( expression . ) { programme } ELSE { programme }
+    (13) structure -> IF ( expression . ) { programme }
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 49
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 43
+
+    (8) geoelement -> GROUND ( expression . , expression , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 50
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 44
+
+    (11) geoelement -> RIVER ( expression . , expression , expression , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 51
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 45
+
+    (14) structure -> WHILE ( expression . ) { programme }
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 52
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 46
+
+    (9) geoelement -> MOUNTAIN ( expression . , expression , expression , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 53
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 47
+
+    (4) programme -> statement ; programme .
+
+    }               reduce using rule 4 (programme -> statement ; programme .)
+    END             reduce using rule 4 (programme -> statement ; programme .)
+
+
+state 48
+
+    (10) geoelement -> WATER ( expression . )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 54
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 49
+
+    (12) structure -> IF ( expression ) . { programme } ELSE { programme }
+    (13) structure -> IF ( expression ) . { programme }
+
+    {               shift and go to state 55
+
+
+state 50
+
+    (8) geoelement -> GROUND ( expression , . expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 56
+
+state 51
+
+    (11) geoelement -> RIVER ( expression , . expression , expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 57
+
+state 52
+
+    (14) structure -> WHILE ( expression ) . { programme }
+
+    {               shift and go to state 58
+
+
+state 53
+
+    (9) geoelement -> MOUNTAIN ( expression , . expression , expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 59
+
+state 54
+
+    (10) geoelement -> WATER ( expression ) .
+
+    ;               reduce using rule 10 (geoelement -> WATER ( expression ) .)
+    }               reduce using rule 10 (geoelement -> WATER ( expression ) .)
+    END             reduce using rule 10 (geoelement -> WATER ( expression ) .)
+
+
+state 55
+
+    (12) structure -> IF ( expression ) { . programme } ELSE { programme }
+    (13) structure -> IF ( expression ) { . programme }
+    (3) programme -> . statement
+    (4) programme -> . statement ; programme
+    (5) statement -> . assignation
+    (6) statement -> . structure
+    (7) statement -> . geoelement
+    (21) assignation -> . IDENTIFIER = expression
+    (12) structure -> . IF ( expression ) { programme } ELSE { programme }
+    (13) structure -> . IF ( expression ) { programme }
+    (14) structure -> . WHILE ( expression ) { programme }
+    (8) geoelement -> . GROUND ( expression , expression , expression )
+    (9) geoelement -> . MOUNTAIN ( expression , expression , expression , expression )
+    (10) geoelement -> . WATER ( expression )
+    (11) geoelement -> . RIVER ( expression , expression , expression , expression )
+
+    IDENTIFIER      shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 26
+    GROUND          shift and go to state 23
+    MOUNTAIN        shift and go to state 27
+    WATER           shift and go to state 29
+    RIVER           shift and go to state 24
+
+    assignation                    shift and go to state 20
+    structure                      shift and go to state 30
+    geoelement                     shift and go to state 31
+    programme                      shift and go to state 60
+    statement                      shift and go to state 28
+
+state 56
+
+    (8) geoelement -> GROUND ( expression , expression . , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 61
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 57
+
+    (11) geoelement -> RIVER ( expression , expression . , expression , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 62
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 58
+
+    (14) structure -> WHILE ( expression ) { . programme }
+    (3) programme -> . statement
+    (4) programme -> . statement ; programme
+    (5) statement -> . assignation
+    (6) statement -> . structure
+    (7) statement -> . geoelement
+    (21) assignation -> . IDENTIFIER = expression
+    (12) structure -> . IF ( expression ) { programme } ELSE { programme }
+    (13) structure -> . IF ( expression ) { programme }
+    (14) structure -> . WHILE ( expression ) { programme }
+    (8) geoelement -> . GROUND ( expression , expression , expression )
+    (9) geoelement -> . MOUNTAIN ( expression , expression , expression , expression )
+    (10) geoelement -> . WATER ( expression )
+    (11) geoelement -> . RIVER ( expression , expression , expression , expression )
+
+    IDENTIFIER      shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 26
+    GROUND          shift and go to state 23
+    MOUNTAIN        shift and go to state 27
+    WATER           shift and go to state 29
+    RIVER           shift and go to state 24
+
+    assignation                    shift and go to state 20
+    structure                      shift and go to state 30
+    geoelement                     shift and go to state 31
+    programme                      shift and go to state 63
+    statement                      shift and go to state 28
+
+state 59
+
+    (9) geoelement -> MOUNTAIN ( expression , expression . , expression , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 64
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 60
+
+    (12) structure -> IF ( expression ) { programme . } ELSE { programme }
+    (13) structure -> IF ( expression ) { programme . }
+
+    }               shift and go to state 65
+
+
+state 61
+
+    (8) geoelement -> GROUND ( expression , expression , . expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 66
+
+state 62
+
+    (11) geoelement -> RIVER ( expression , expression , . expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 67
+
+state 63
+
+    (14) structure -> WHILE ( expression ) { programme . }
+
+    }               shift and go to state 68
+
+
+state 64
+
+    (9) geoelement -> MOUNTAIN ( expression , expression , . expression , expression )
+    (15) expression -> . expression ADD_OP expression
+    (16) expression -> . expression MUL_OP expression
+    (17) expression -> . NUMBER
+    (18) expression -> . IDENTIFIER
+    (19) expression -> . ( expression )
+    (20) expression -> . ADD_OP expression
+
+    NUMBER          shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    (               shift and go to state 6
+    ADD_OP          shift and go to state 8
+
+    expression                     shift and go to state 69
+
+state 65
+
+    (12) structure -> IF ( expression ) { programme } . ELSE { programme }
+    (13) structure -> IF ( expression ) { programme } .
+
+    ELSE            shift and go to state 70
+    ;               reduce using rule 13 (structure -> IF ( expression ) { programme } .)
+    END             reduce using rule 13 (structure -> IF ( expression ) { programme } .)
+    }               reduce using rule 13 (structure -> IF ( expression ) { programme } .)
+
+
+state 66
+
+    (8) geoelement -> GROUND ( expression , expression , expression . )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    )               shift and go to state 71
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 67
+
+    (11) geoelement -> RIVER ( expression , expression , expression . , expression )
+    (15) expression -> expression . ADD_OP expression
+    (16) expression -> expression . MUL_OP expression
+
+    ,               shift and go to state 72
+    ADD_OP          shift and go to state 10
+    MUL_OP          shift and go to state 11
+
+
+state 68
+
+    (14) structure -> WHILE ( expression ) { programme } .
+
+    ;               reduce using rule 14 (structure -> WHILE ( expression ) { programme } .)
+    END             reduce using rule 14 (structure -> WHILE ( expression ) { programme } .)
+    }               reduce using rule 14 (structure -> WHILE ( expression ) { programme } .)
